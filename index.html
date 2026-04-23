@@ -322,7 +322,8 @@
     .page-hero h1 { margin-bottom: 1rem; }
     .page-hero p { font-size: 1.125rem; max-width: 620px; margin: 0 auto; }
     .contact-grid {
-      display: grid; grid-template-columns: 1.2fr 1fr; gap: 3rem;
+      max-width: 620px;
+      margin: 0 auto;
       padding: 4rem 0;
     }
     .contact-form {
@@ -355,6 +356,39 @@
       background: #fff;
     }
     .form-row textarea { resize: vertical; min-height: 110px; }
+    .contact-success {
+      background: #fff;
+      border: 1px solid rgba(11, 37, 69, 0.08);
+      border-radius: 1rem;
+      padding: 3.5rem 2.5rem;
+      text-align: center;
+      animation: fadeIn 0.5s ease;
+    }
+    .contact-success-icon {
+      width: 64px; height: 64px;
+      background: #c97b63;
+      color: #faf7f2;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 1.25rem;
+    }
+    .contact-success h3 {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 1.875rem;
+      font-weight: 500;
+      color: #0b2545;
+      margin-bottom: 0.75rem;
+    }
+    .contact-success p {
+      font-size: 1rem;
+      color: #3d4a5c;
+      max-width: 360px;
+      margin: 0 auto;
+    }
     .contact-side { }
     .contact-info-card {
       background: #fff;
@@ -517,7 +551,7 @@
     }
     .footer-grid {
       display: grid;
-      grid-template-columns: 2fr 1fr 1fr 1fr 1.2fr;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
       gap: 2.5rem;
       margin-bottom: 3rem;
     }
@@ -774,13 +808,12 @@
     <div class="container">
       <div class="eyebrow">Get in touch</div>
       <h1>Let's talk about your paperwork.</h1>
-      <p>Pick a time below to schedule a 20-minute walkthrough, or send us a note and we'll get back to you within one business day.</p>
     </div>
   </section>
 
   <div class="container">
     <div class="contact-grid">
-      <form class="contact-form" onsubmit="handleContactSubmit(event)">
+      <form class="contact-form" id="contact-form" onsubmit="handleContactSubmit(event)">
         <h3 style="font-family: 'Fraunces', serif; font-size: 1.5rem; margin-bottom: 1.5rem; color: #0b2545;">Send us a message</h3>
         <div class="form-row">
           <label for="c-name">Your name</label>
@@ -813,24 +846,10 @@
         </div>
         <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
       </form>
-
-      <div class="contact-side">
-        <div class="scheduler-embed">
-          <h3>Prefer to book a time?</h3>
-          <p>Pick a call type and we'll take you to the calendar.</p>
-          <div class="scheduler-options">
-            <button class="btn btn-secondary" onclick="alert('Calendly embed placeholder — Law Firm Intro Call')">Law Firm Call</button>
-            <button class="btn btn-secondary" onclick="alert('Calendly embed placeholder — Dealership Intro Call')">Dealership Call</button>
-          </div>
-          <p style="margin-top: 1.5rem; font-size: 0.8rem;">Connect your Calendly / Cal.com account here once live.</p>
-        </div>
-
-        <div class="contact-info-card" style="margin-top: 1.25rem;">
-          <h3>Other ways to reach us</h3>
-          <div class="info-row"><span class="info-icon">📞</span><div><strong>Phone</strong><br/><span style="color:#6b7a8f;">(555) 123-4567</span></div></div>
-          <div class="info-row"><span class="info-icon">✉️</span><div><strong>Email</strong><br/><span style="color:#6b7a8f;">hello@ink-well.co</span></div></div>
-          <div class="info-row"><span class="info-icon">🕒</span><div><strong>Hours</strong><br/><span style="color:#6b7a8f;">Mon–Fri · 8a–6p ET</span></div></div>
-        </div>
+      <div class="contact-success" id="contact-success" style="display:none;">
+        <div class="contact-success-icon">✓</div>
+        <h3>Thank you.</h3>
+        <p>Our team will be reaching out within 24 hours.</p>
       </div>
     </div>
   </div>
@@ -1237,17 +1256,9 @@
           <li><a data-page="login-auto">Dealership Portal</a></li>
         </ul>
       </div>
-      <div class="footer-col">
-        <h4>Get in Touch</h4>
-        <ul>
-          <li>(555) 123-4567</li>
-          <li>hello@ink-well.co</li>
-          <li>Mon–Fri · 8a–6p ET</li>
-        </ul>
-      </div>
     </div>
     <div class="footer-bottom">
-      <div>© 2026 Inkwell. Servicing all 50 states.</div>
+      <div>Part of Capital Freight &amp; Co · © 2026 Capital Freight &amp; Co. All rights reserved.</div>
       <div><a>Privacy</a> · <a>Terms</a></div>
     </div>
   </div>
@@ -1287,8 +1298,11 @@
   // ---------- FORM HANDLERS (placeholders) ----------
   function handleContactSubmit(e) {
     e.preventDefault();
-    alert("Thanks! In production this will submit to your CRM or inbox.\n\nNext step: wire this form to your email provider or CRM (HubSpot, Pipedrive, etc.).");
-    e.target.reset();
+    const form = document.getElementById('contact-form');
+    const success = document.getElementById('contact-success');
+    form.style.display = 'none';
+    success.style.display = 'block';
+    success.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 
   function handleLogin(e, which) {
